@@ -156,6 +156,7 @@ lval* builtin_op(lval* v, char* op) {
 	while(v->count > 0) {
 		lval* y = lval_pop(v, 0);
 
+		if(strcmp("max", op) == 0) { x->num = (x->num > y->num) ? x->num : y->num; }
 		if(strcmp("*", op) == 0) { x->num *= y->num; }
 		if(strcmp("-", op) == 0) { x->num -= y->num; }
 		if(strcmp("+", op) == 0) { x->num += y->num; }
@@ -249,7 +250,7 @@ int main(int argc, char** argv) {
 	mpca_lang(MPCA_LANG_DEFAULT,
 	"                                          \
 		number : /-?[0-9]+/ ;                    \
-		symbol : '+' | '-' | '*' | '/' ;         \
+		symbol : '+' | '-' | '*' | '/' | \"max\" ;         \
 		sexpr  : '(' <expr>* ')' ;               \
 		expr   : <number> | <symbol> | <sexpr> ; \
 		lisp   : /^/ <expr>* /$/ ;               \
